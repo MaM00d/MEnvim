@@ -12,7 +12,6 @@ vim.opt.wrap = true
 
 vim.opt.swapfile = false
 vim.opt.backup = false
-vim.opt.undodir = "$HOME/.vim/undo"
 vim.opt.undofile = true
 
 vim.opt.hlsearch = false
