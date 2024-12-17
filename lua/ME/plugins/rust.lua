@@ -25,6 +25,9 @@ return {
 					default_settings = {
 						-- rust-analyzer language server configuration
 						["rust-analyzer"] = {
+							rustfmt = {
+								overrideCommand = { "leptosfmt", "--stdin", "--rustfmt" },
+							},
 							cargo = {
 								allFeatures = true,
 								features = "all", -- features = ssr, for LSP support in leptos SSR functions

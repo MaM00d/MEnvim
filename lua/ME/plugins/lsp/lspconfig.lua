@@ -21,9 +21,24 @@ return {
 		lspconfig.pyright.setup({})
 		lspconfig.ast_grep.setup({})
 		lspconfig.clangd.setup({})
-		lspconfig.cssls.setup({})
 		lspconfig.texlab.setup({})
 		lspconfig.sqls.setup({})
+		-- lspconfig.css_variables.setup({})
+		lspconfig.somesass_ls.setup({})
+
+		-- lspconfig.cssls.setup({
+		-- 	settings = {
+		-- 		css = {
+		-- 			validate = true,
+		-- 		},
+		-- 		less = {
+		-- 			validate = true,
+		-- 		},
+		-- 		scss = {
+		-- 			validate = true,
+		-- 		},
+		-- 	},
+		-- })
 		-- lspconfig.openscad_lsp.setup({})
 
 		-- Keymaps

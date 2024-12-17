@@ -1,72 +1,102 @@
 return {
-	"nvimtools/none-ls.nvim", -- configure formatters & linters
-	lazy = true,
-	-- event = { "BufReadPre", "BufNewFile" }, -- to enable uncomment this
-	dependencies = {
-		"jay-babu/mason-null-ls.nvim",
+
+	{
+		"stevearc/conform.nvim",
+		event = { "BufReadPre", "BufNewFile" },
+		opts = {},
+		config = function()
+			require("conform").setup({
+				formatters_by_ft = {
+					lua = { "stylua" },
+					css = { "prettier" },
+					scss = { "prettier" },
+					html = { "prettier" },
+					javascript = { "prettier" },
+					typescript = { "prettier" },
+					-- Conform will run multiple formatters sequentially
+					yaml = { "prettier" },
+					markdown = { "prettier" },
+					python = { "isort", "black" },
+					graphql = { "prettier" },
+					-- You can customize some of the format options for the filetype (:help conform.format)
+					rust = { "leptosfmt" }, --"rustfmt", lsp_format = "fallback" },
+					go = { "gofumpt" },
+					sql = { "sqlfmt" },
+					-- Conform will run the first available formatter
+					javascript = { "prettierd", "prettier", stop_after_first = true },
+				},
+			})
+			vim.api.nvim_create_autocmd("BufWritePre", {
+				pattern = "*",
+				callback = function(args)
+					require("conform").format({ bufnr = args.buf })
+				end,
+			})
+		end,
 	},
-	config = function()
-		local mason_null_ls = require("mason-null-ls")
+	{
+		"zapling/mason-conform.nvim",
+		config = function()
+			require("mason-conform").setup({})
+		end,
+	},
+	{
+		-- formatting.prettier, -- js/ts formatter
+		-- formatting.stylua, -- lua formatter
+		-- formatting.isort,
+		-- formatting.shfmt,
+		-- formatting.black,
+		-- formatting.dart_format,
+		-- -- formatting.rustfmt,
+		-- formatting.leptosfmt,
+		-- formatting.clang_format,
+		-- diagnostics.pylint,
+		-- formatting.gofumpt,
+		-- -- formatting.openscad,
+		-- formatting.goimports_reviser,
+		-- formatting.golines,
+		-- formatting.sqlfmt,
+		"mfussenegger/nvim-lint",
+		opts = {},
+		config = function()
+			require("lint").linters_by_ft = {
+				markdown = { "vale" },
+				lua = { "luac" },
+			}
+			vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+				callback = function()
+					-- try_lint without arguments runs the linters defined in `linters_by_ft`
+					-- for the current filetype
+					require("lint").try_lint()
 
-		local null_ls = require("null-ls")
+					-- You can call `try_lint` with a linter name or a list of names to always
+					-- run specific linters, independent of the `linters_by_ft` configuration
+					-- require("lint").try_lint("cspell")
+				end,
+			})
+		end,
+	},
 
-		local null_ls_utils = require("null-ls.utils")
+	{
+		"rshkarin/mason-nvim-lint",
+		opts = {},
+		config = function()
+			require("mason-nvim-lint").setup({
+				-- A list of linters to automatically install if they're not already installed. Example: { "eslint_d", "revive" }
+				-- This setting has no relation with the `automatic_installation` setting.
+				-- Names of linters should be taken from the mason's registry.
+				---@type string[]
+				ensure_installed = {},
 
-		-- auto install the formatters
-		mason_null_ls.setup({
-			automatic_installation = true,
-		})
+				-- Whether linters that are set up (via nvim-lint) should be automatically installed if they're not already installed.
+				-- It tries to find the specified linters in the mason's registry to proceed with installation.
+				-- This setting has no relation with the `ensure_installed` setting.
+				---@type boolean
+				automatic_installation = true,
 
-		-- for conciseness
-		local formatting = null_ls.builtins.formatting -- to setup formatters
-		local diagnostics = null_ls.builtins.diagnostics -- to setup linters
-
-		-- to setup format on save
-		local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-
-		-- configure null_ls
-		null_ls.setup({
-			-- add package.json as identifier for root (for typescript monorepos)
-			root_dir = null_ls_utils.root_pattern(".null-ls-root", "Makefile", ".git", "package.json"),
-			-- setup formatters & linters
-			sources = {
-				--  to disable file types use
-				--  "formatting.prettier.with({disabled_filetypes: {}})" (see null-ls docs)
-				formatting.prettier, -- js/ts formatter
-				formatting.stylua, -- lua formatter
-				formatting.isort,
-				formatting.shfmt,
-				formatting.black,
-				formatting.dart_format,
-				-- formatting.rustfmt,
-				formatting.leptosfmt,
-				formatting.clang_format,
-				diagnostics.pylint,
-				formatting.gofumpt,
-				-- formatting.openscad,
-				formatting.goimports_reviser,
-				formatting.golines,
-				formatting.sqlfmt,
-			},
-			-- configure format on save
-			on_attach = function(current_client, bufnr)
-				if current_client.supports_method("textDocument/formatting") then
-					vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-					vim.api.nvim_create_autocmd("BufWritePre", {
-						group = augroup,
-						buffer = bufnr,
-						callback = function()
-							-- vim.lsp.buf.formatting_sync()
-							vim.lsp.buf.format({
-								filter = function(client)
-									return client.name == "null-ls"
-								end,
-								bufnr = bufnr,
-							})
-						end,
-					})
-				end
-			end,
-		})
-	end,
+				-- Disables warning notifications about misconfigurations such as invalid linter entries and incorrect plugin load order.
+				quiet_mode = false,
+			})
+		end,
+	},
 }

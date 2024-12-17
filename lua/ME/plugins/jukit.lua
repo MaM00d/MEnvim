@@ -1,8 +1,8 @@
 return {
 	"luk400/vim-jukit",
-	-- Lazy = true,
-	-- ft = "python",
-	init = function()
+	Lazy = true,
+	ft = "python",
+	config = function()
 		vim.g.python3_host_prog = "/usr/bin/python3"
 
 		vim.g.jukit_shell_cmd = "ipython3"

@@ -52,8 +52,9 @@ return {
 	},
 	{
 		"lervag/vimtex",
-		lazy = false,
-		init = function()
+		lazy = true,
+		ft = "tex",
+		config = function()
 			syntax = enable
 			vim.g.vimtex_syntax_match_unicode = 1
 			vim.g.vimtex_indent_enabled = 1

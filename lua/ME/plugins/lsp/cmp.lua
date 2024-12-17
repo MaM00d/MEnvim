@@ -8,12 +8,12 @@ return {
 		"rafamadriz/friendly-snippets", -- useful snippets
 		"onsails/lspkind.nvim", -- vs-code like pictograms
 		"hrsh7th/cmp-cmdline",
+		"roginfarrer/cmp-css-variables",
 	},
 	init = function()
 		local cmp = require("cmp")
 
 		local luasnip = require("luasnip")
-
 		local lspkind = require("lspkind")
 
 		-- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
@@ -44,6 +44,7 @@ return {
 				{ name = "luasnip" }, -- snippets
 				{ name = "buffer" }, -- text within current buffer
 				{ name = "path" }, -- file system paths
+				{ name = "css-variables" },
 			}),
 			-- configure lspkind for vs-code like pictograms in completion menu
 			formatting = {
