@@ -19,7 +19,7 @@ return {
 					python = { "isort", "black" },
 					graphql = { "prettier" },
 					-- You can customize some of the format options for the filetype (:help conform.format)
-					rust = { "leptosfmt" }, --"rustfmt", lsp_format = "fallback" },
+					-- rust = { "leptosfmt" }, --"rustfmt", lsp_format = "fallback" },
 					go = { "gofumpt" },
 					sql = { "sqlfmt" },
 					-- Conform will run the first available formatter
@@ -61,7 +61,7 @@ return {
 		config = function()
 			require("lint").linters_by_ft = {
 				markdown = { "vale" },
-				lua = { "luac" },
+				-- lua = { "luac" },
 			}
 			vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 				callback = function()
@@ -92,7 +92,7 @@ return {
 				-- It tries to find the specified linters in the mason's registry to proceed with installation.
 				-- This setting has no relation with the `ensure_installed` setting.
 				---@type boolean
-				automatic_installation = true,
+				-- automatic_installation = true,
 
 				-- Disables warning notifications about misconfigurations such as invalid linter entries and incorrect plugin load order.
 				quiet_mode = false,

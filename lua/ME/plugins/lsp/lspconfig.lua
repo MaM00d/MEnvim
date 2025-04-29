@@ -23,8 +23,10 @@ return {
 		lspconfig.clangd.setup({})
 		lspconfig.texlab.setup({})
 		lspconfig.sqls.setup({})
+		lspconfig.ts_ls.setup({})
 		-- lspconfig.css_variables.setup({})
 		lspconfig.somesass_ls.setup({})
+		lspconfig.tailwindcss.setup({})
 
 		-- lspconfig.cssls.setup({
 		-- 	settings = {
@@ -79,22 +81,22 @@ return {
 		-----------------
 
 		-- Diagnostics signs  
-		-- local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
-		-- for type, icon in pairs(signs) do
-		-- 	local hl = "DiagnosticSign" .. type
-		-- 	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-		-- end
-		--
-		-- vim.diagnostic.config({
-		-- 	virtual_text = {
-		-- 		prefix = "", -- Could be '●', '▎', │, 'x', '■', , 
-		-- 	},
-		--
-		-- 	-- float = { border = border },
-		-- 	-- virtual_text = false,
-		-- 	-- signs = true,
-		-- 	-- underline = true,
-		-- })
+		local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
+		for type, icon in pairs(signs) do
+			local hl = "DiagnosticSign" .. type
+			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+		end
+
+		vim.diagnostic.config({
+			virtual_text = {
+				prefix = "", -- Could be '●', '▎', │, 'x', '■', , 
+			},
+
+			-- float = { border = border },
+			-- virtual_text = false,
+			-- signs = true,
+			-- underline = true,
+		})
 
 		------------------
 

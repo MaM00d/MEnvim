@@ -15,8 +15,8 @@ vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set("n", "n", "nzzzv")
 
 --fix the cursor in the middle while half page move
-vim.keymap.set("n", "<C-d>", "<C-d>zz")
-vim.keymap.set("n", "<C-u>", "<C-u>zz")
+vim.keymap.set("n", "<M-d>", "<C-d>zz")
+vim.keymap.set("n", "<M-u>", "<C-u>zz")
 --use all word
 -- vim.keymap.set("n", "cw", "ciw")
 -- vim.keymap.set("n", "dw", "diw")

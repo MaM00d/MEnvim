@@ -5,6 +5,17 @@ return {
 		lazy = false, -- This plugin is already lazy
 		ft = "rust",
 		config = function()
+			vim.api.nvim_create_autocmd("BufWritePost", {
+				pattern = "*.rs",
+				callback = function()
+					local found = vim.fn.search("view!", "nw")
+					if found > 0 then
+						local filepath = vim.fn.expand("%:p")
+						vim.fn.system("leptosfmt " .. filepath)
+						vim.cmd("edit!")
+					end
+				end,
+			})
 			local mason_registry = require("mason-registry")
 			local codelldb = mason_registry.get_package("codelldb")
 			local extension_path = codelldb:get_install_path() .. "/extension/"
@@ -22,6 +33,7 @@ return {
 					on_attach = function(client, bufnr)
 						-- you can also put keymaps in here
 					end,
+
 					default_settings = {
 						-- rust-analyzer language server configuration
 						["rust-analyzer"] = {

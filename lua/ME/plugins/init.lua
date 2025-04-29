@@ -1,7 +1,4 @@
 return {
-	-- "chrisbra/vim-commentary",
-	-- { "neoclide/coc.nvim", branch = "release" },
-
 	--sudo ask plugin
 	"lambdalisue/suda.vim",
 	--requried for telescope treesetter obsidian and more
@@ -51,28 +48,6 @@ return {
 		end,
 	},
 	{
-		"lervag/vimtex",
-		lazy = true,
-		ft = "tex",
-		config = function()
-			syntax = enable
-			vim.g.vimtex_syntax_match_unicode = 1
-			vim.g.vimtex_indent_enabled = 1
-			-- vim.g.vimtex_compiler_method = "arara"
-
-			-- Configure the compiler for VimTeX
-			vim.g.vimtex_compiler_latexmk = {
-				executable = "latexmk",
-				options = {
-					"-xelatex", -- Specifies the use of XeLaTeX
-					"-file-line-error",
-					"-synctex=1",
-					"-interaction=nonstopmode",
-				},
-			}
-		end,
-	},
-	{
 		"nvim-treesitter/nvim-treesitter-context",
 		config = function()
 			require("treesitter-context").setup({
@@ -88,42 +63,6 @@ return {
 				separator = nil,
 				zindex = 20, -- The Z-index of the context window
 				on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
-			})
-		end,
-	},
-	--session restore
-	-- "rmagatti/auto-session",
-	---- lazy.nvim
-	{
-		"folke/noice.nvim",
-		event = "VeryLazy",
-		opts = {
-			-- add any options here
-		},
-		dependencies = {
-			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-			"MunifTanjim/nui.nvim",
-			-- OPTIONAL:
-			--   `nvim-notify` is only needed, if you want to use the notification view.
-			--   If not available, we use `mini` as the fallback
-			"rcarriga/nvim-notify",
-		},
-
-		config = function()
-			require("noice").setup({
-				notify = {
-					-- Noice can be used as `vim.notify` so you can route any notification like other messages
-					-- Notification messages have their level and other properties set.
-					-- event is always "notify" and kind can be any log level as a string
-					-- The default routes will forward notifications to nvim-notify
-					-- Benefit of using Noice for this is the routing and consistent history view
-					enabled = true,
-					view = "notify",
-				},
-				require("notify").setup({
-					background_colour = "#000000",
-					render = "minimal",
-				}),
 			})
 		end,
 	},
